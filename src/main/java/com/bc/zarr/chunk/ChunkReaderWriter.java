@@ -52,7 +52,7 @@ public abstract class ChunkReaderWriter {
     }
 
     public static ChunkReaderWriter create(Compressor compressor, DataType dataType, ByteOrder order, int[] chunkShape, Number fill, Store store) {
-        if (dataType == DataType.f8) {
+        if (dataType == DataType.i8 || dataType == DataType.f8) {
             return new ChunkReaderWriterImpl_Double(order, compressor, chunkShape, fill, store);
         } else if (dataType == DataType.f4) {
             return new ChunkReaderWriterImpl_Float(order, compressor, chunkShape, fill, store);

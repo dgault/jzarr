@@ -210,6 +210,8 @@ public final class ZarrUtils {
                 return new float[size];
             case f8:
                 return new double[size];
+            case i8:
+              return new double[size];
         }
         return null;
     }
