@@ -26,7 +26,7 @@ public class ZarrHeader {
     private final CompressorBean compressor;
     private final String dtype;
     private final Number fill_value;
-    private final String filters = null;
+    private final String[] filters = null;
     private final String order = "C";
     private final int[] shape;
     private final int zarr_format = 2;
