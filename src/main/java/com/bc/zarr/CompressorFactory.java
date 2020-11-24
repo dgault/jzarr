@@ -4,6 +4,9 @@ import org.blosc.BufferSizes;
 import org.blosc.JBlosc;
 import org.blosc.Shuffle;
 
+import com.amazonaws.util.IOUtils;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -136,9 +139,15 @@ public class CompressorFactory {
                 BufferSizes bs = jb.cbufferSizes(ByteBuffer.wrap(header));
                 int chunkSize = (int) bs.getCbytes();
 
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                IOUtils.copy(is, outputStream);
+                ///System.arraycopy(outputStream.toByteArray(), 0, inBytes, header.length, chunkSize);
+                byte[] test = outputStream.toByteArray();
+                
                 byte[] inBytes = Arrays.copyOf(header, header.length + chunkSize);
-                is.read(inBytes, header.length, chunkSize);
-
+                //is.read(inBytes, header.length, chunkSize);
+                System.arraycopy(test, 0, inBytes, header.length, test.length);
+               
                 ByteBuffer outBuffer = ByteBuffer.allocate((int) bs.getNbytes());
                 jb.decompress(ByteBuffer.wrap(inBytes), outBuffer, outBuffer.limit());
 
